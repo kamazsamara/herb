@@ -1,0 +1,29 @@
+<?php
+function changeUserSubscribe($point,$id)
+{
+	global $dbconnect;
+	$sql = "SELECT `subscribe` FROM `users` WHERE `id` = '".$id."' LIMIT 1";
+	$subs = mysqli_fetch_array(mysqli_query($dbconnect, $sql));
+	$subs_arr = explode(';',$subs['subscribe']);
+	if(count(@$subs_arr)>0)
+	{
+		$final_arr = $subs_arr; 
+		if(in_array($point,$final_arr))
+		{
+			unset($final_arr[array_search($point,$final_arr)]);
+		}
+		else
+		{
+			$final_arr[] = $point;
+		}
+	}
+	else
+	{
+		$final_arr[] = $point;
+	}
+	
+	$subscribes = implode(';',$final_arr);
+	
+	mysqli_query($dbconnect, "UPDATE `users` SET `subscribe` = '".$subscribes."' WHERE `id` = '".$id."'");
+}
+?>
