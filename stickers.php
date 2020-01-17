@@ -17,7 +17,7 @@ abstract class Output_Document implements Interface_Output_Document
 {  
     abstract protected function send_to_api($request);
 	
-	public void function  send($id,$messenger,$request)
+	public function  send($id,$messenger,$request)
 	{
 		$this->user_id = (int)$id;
 		$this->send_to_api($messenger,$request);
